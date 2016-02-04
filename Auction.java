@@ -43,7 +43,7 @@ public class Auction
             System.out.println(lot.toString());
         }
     }
-    
+
     /**
      * Make a bid for a lot.
      * A message is printed indicating whether the bid is
@@ -59,13 +59,13 @@ public class Auction
             boolean successful = getLot(lotNumber).bidFor(new Bid(bidder, value));
             if(successful) {
                 System.out.println("The bid for lot number " +
-                                   lotNumber + " was successful.");
+                    lotNumber + " was successful.");
             }
             else {
                 // Report which bid is higher.
                 System.out.println("Lot number: " + lotNumber +
-                                   " already has a bid of: " +
-                                   getLot(lotNumber).getHighestBid().getValue());
+                    " already has a bid of: " +
+                    getLot(lotNumber).getHighestBid().getValue());
             }
         }
     }
@@ -84,9 +84,9 @@ public class Auction
             // right lot.
             if(selectedLot.getNumber() != lotNumber) {
                 System.out.println("Internal error: Lot number " +
-                                   selectedLot.getNumber() +
-                                   " was returned instead of " +
-                                   lotNumber);
+                    selectedLot.getNumber() +
+                    " was returned instead of " +
+                    lotNumber);
                 // Don't return an invalid lot.
                 selectedLot = null;
             }
@@ -94,11 +94,11 @@ public class Auction
         }
         else {
             System.out.println("Lot number: " + lotNumber +
-                               " does not exist.");
+                " does not exist.");
             return null;
         }
     }
-    
+
     /**
      * Método que muestra por pantalla los detalles de los items que están siendo subastados
      * Si hay alguno que no ha recibido pujas se indicará con un mensaje de error
@@ -108,13 +108,28 @@ public class Auction
         while (indice < lots.size()){
             if (lots.get(indice).getHighestBid() != null){
                 System.out.println("Nombre de usuario--> " + lots.get(indice).getHighestBid().getBidder().getName() +
-                                   "\nPuja--> " + lots.get(indice).getHighestBid().getValue() + 
-                                   "\nDescripción--> " + lots.get(indice).getDescription() + "\n");
+                    "\nPuja--> " + lots.get(indice).getHighestBid().getValue() + 
+                    "\nDescripción--> " + lots.get(indice).getDescription() + "\n");
             }
             else {
                 System.out.println("El objeto " + lots.get(indice).getDescription() + " no ha recibido ninguna puja todavía \n");
             }
             indice = indice + 1;
         }
+    }
+
+    /**
+     * Método que devuelve una colección con todos los objetos que no han sido subastados
+     */
+    public ArrayList getUnsold(){
+        ArrayList<Lot> unsold = new ArrayList<>();
+        int indice = 0;
+        while (indice < lots.size()){
+            if (lots.get(indice).getHighestBid() == null){
+                unsold.add(lots.get(indice));
+            }
+            indice = indice + 1;
+        }
+        return unsold;
     }
 }
