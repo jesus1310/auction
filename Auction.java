@@ -55,20 +55,17 @@ public class Auction
      */
     public void makeABid(int lotNumber, Person bidder, long value)
     {
-        Lot selectedLot = getLot(lotNumber);
-        if(selectedLot != null) {
-            Bid bid = new Bid(bidder, value);
-            boolean successful = selectedLot.bidFor(bid);
+        if(getLot(lotNumber) != null) {
+            boolean successful = getLot(lotNumber).bidFor(new Bid(bidder, value));
             if(successful) {
                 System.out.println("The bid for lot number " +
                                    lotNumber + " was successful.");
             }
             else {
                 // Report which bid is higher.
-                Bid highestBid = selectedLot.getHighestBid();
                 System.out.println("Lot number: " + lotNumber +
                                    " already has a bid of: " +
-                                   highestBid.getValue());
+                                   getLot(lotNumber).getHighestBid().getValue());
             }
         }
     }
@@ -99,6 +96,25 @@ public class Auction
             System.out.println("Lot number: " + lotNumber +
                                " does not exist.");
             return null;
+        }
+    }
+    
+    /**
+     * Método que muestra por pantalla los detalles de los items que están siendo subastados
+     * Si hay alguno que no ha recibido pujas se indicará con un mensaje de error
+     */
+    public void close(){
+        int indice = 0;
+        while (indice < lots.size()){
+            if (lots.get(indice).getHighestBid() != null){
+                System.out.println("Nombre de usuario--> " + lots.get(indice).getHighestBid().getBidder().getName() +
+                                   "\nPuja--> " + lots.get(indice).getHighestBid().getValue() + 
+                                   "\nDescripción--> " + lots.get(indice).getDescription() + "\n");
+            }
+            else {
+                System.out.println("El objeto " + lots.get(indice).getDescription() + " no ha recibido ninguna puja todavía \n");
+            }
+            indice = indice + 1;
         }
     }
 }
