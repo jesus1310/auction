@@ -79,7 +79,13 @@ public class Auction
     {
         if((lotNumber >= 1) && (lotNumber < nextLotNumber)) {
             // The number seems to be reasonable.
-            Lot selectedLot = lots.get(lotNumber - 1);
+            Lot selectedLot = null;
+            if (lotNumber > 1){
+                selectedLot = lots.get(lotNumber - lots.size() - 1);
+            }
+            else {
+                selectedLot = lots.get(lotNumber - 1);
+            }
             // Include a confidence check to be sure we have the
             // right lot.
             if(selectedLot.getNumber() != lotNumber) {
@@ -131,5 +137,12 @@ public class Auction
             indice = indice + 1;
         }
         return unsold;
+    }
+
+    /**
+     * Método que elimina un objeto de la coleccion lots
+     */
+    public void removeLot(int lotNumber){
+        lots.remove(lotNumber - 1);
     }
 }
