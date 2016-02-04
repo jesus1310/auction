@@ -142,7 +142,12 @@ public class Auction
     /**
      * Método que elimina un objeto de la coleccion lots
      */
-    public void removeLot(int lotNumber){
-        lots.remove(lotNumber - 1);
+    public Lot removeLot(int lotNumber){
+        Lot eliminado = null;
+        if ((lotNumber - 1) < lots.size()){
+            eliminado = lots.get(lotNumber - 1);
+            lots.remove(lotNumber - 1);
+        }
+        return eliminado;
     }
 }
